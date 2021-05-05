@@ -15,8 +15,6 @@
 
 #form-itinerary input[type="text"] {
   /* height: 44px; */
-  background: transparent;
-  outline: 0;
   border: 1px solid white;
   border-radius: 30px;
   padding: 10px;
@@ -32,5 +30,13 @@
   flex-direction: column;
   align-items: center;
   margin: 10px 15px;
+}
+
+#submit-itinerary {
+  margin-top: 30px;
+}
+#submit-itinerary:hover {
+  background: #fff;
+  color: #1A1F47;
 }
 

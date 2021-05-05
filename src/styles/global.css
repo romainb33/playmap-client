@@ -20,6 +20,36 @@ ul {
   list-style-type: none;
 }
 
+input,
+button {
+  background: transparent;
+  outline: 0;
+  border: 0;
+}
+input {
+  color: white
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
 .App {
   height: 100vh;
 }
@@ -51,7 +81,7 @@ ul {
   display: flex
 }
 
-/* text */
+/* COLOR TEXT */
 .white {
   color: #fff;
 }
@@ -59,6 +89,13 @@ ul {
   color: #1A1F47;
 }
 
+/* BUTTON */
+.Btn-rounded {
+  color: white;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 10px 40px;
+}
 .Logo {
   margin-top: 20px;
 }

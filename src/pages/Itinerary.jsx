@@ -12,15 +12,15 @@ const Home = () => {
 
                 <form action="POST" id="form-itinerary"className="flex">
                     <label htmlFor="origin">Departure</label>
-                    <input type="text" name="origin" id="origin" placeholder="|"/>
+                    <input type="text" name="origin" id="origin" placeholder="|"required />
 
                     <label htmlFor="destination">Arrival</label>
-                    <input type="text" name="destination" id="destination" placeholder="|"/>
+                    <input type="text" name="destination" id="destination" placeholder="|" required />
 
                     <label htmlFor="mode">Travel Mode</label>
                     <div id="travel-mode" className="flex">
                         <div>
-                            <input type="radio" name="mode" id="car"  value="DRIVING"/>
+                            <input type="radio" name="mode" id="car" value="DRIVING" checked/>
                             <label htmlFor="car">Car</label>
                         </div>
                         <div>
@@ -37,7 +37,7 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <button className="Btn-rounded" >Submit</button>
+                    <button id="submit-itinerary" className="Btn-rounded">Submit</button>
                 </form>
 
             </section>

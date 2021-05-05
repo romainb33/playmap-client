@@ -4,8 +4,8 @@ import '../styles/Home.css'
 
 const Home = () => {
     return (
-        <div className="flex Home">
-            <section className="white">
+        <div className="flex Home white">
+            <section>
                 <h6>Welcome on</h6>
                 <h1>Playmap.</h1>
 
@@ -15,9 +15,12 @@ const Home = () => {
                 <p>
                 With Playmap your video playlist correspond to the length of your travel
                 </p>
-                
-                <p htmlFor="duration">Enter your the length of your travel(in minutes)</p>
-                <input type="number" name="duration" id="duration" placeholder="73min"/>
+            </section>    
+            <section>
+                <p className="instructions">
+                    Enter your travel length (in minutes)
+                </p>
+                <input type="number" name="duration" id="duration-input" placeholder="62min"/>
 
                 <p>Or</p>
                 <Link to="/itinerary">

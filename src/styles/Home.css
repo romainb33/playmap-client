@@ -1,10 +1,14 @@
 .Home {
   height: 90vh;
-  margin: 0 30px;
+  margin: 0 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.Home > section:first-of-type {
+  margin-bottom: 60px;
 }
 .Home h6 {
   font-size: 16px;
@@ -20,3 +24,21 @@
   line-height: 55px;
 }
 
+.instructions {
+  font-size: 14px;
+}
+#duration-input {
+  width: 70%;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+  border-bottom: 1px solid white;
+} 
+
+#duration-input::placeholder {
+  color: #4A6AA8;
+}
+
+#duration-input + p {
+  margin: 20px 0;
+}
