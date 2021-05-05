@@ -1,0 +1,40 @@
+#PlaylistDetails {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 30vh;
+    padding: 30px;
+    background: #FFF;
+    border-radius: 30px 30px 0 0 ;
+    animation: slidein 0.6s ease-in-out forwards;
+  }
+#estimated-time {
+    flex-direction: column;
+    align-items: center;
+}
+#estimated-time > div {
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+#estimated-time > div > p {
+    font-weight: 700;
+    font-size: 46px;
+    text-align: right;
+    line-height: 20px;
+}
+#estimated-time > div > p span {
+    font-weight: 400;
+    font-size: 18px;
+}
+/* ANIMATIONS */
+@keyframes slidein {
+  from {
+    top: 100vh;
+  }
+  to {
+    top: 70vh;
+  }
+}
