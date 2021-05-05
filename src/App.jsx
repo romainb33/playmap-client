@@ -15,6 +15,7 @@ function App() {
         <Route exact path="/itinerary" component={Itinerary} />
       </Switch>
     </div>
+    
   );
 }
 

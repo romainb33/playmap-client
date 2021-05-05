@@ -17,25 +17,27 @@ const Home = () => {
                     <label htmlFor="destination">Arrival</label>
                     <input type="text" name="destination" id="destination" placeholder="|"/>
 
-                    <div id="travel-mode">
-                        <label htmlFor="mode">Travel Mode</label>
-                        <span>
+                    <label htmlFor="mode">Travel Mode</label>
+                    <div id="travel-mode" className="flex">
+                        <div>
                             <input type="radio" name="mode" id="car"  value="DRIVING"/>
                             <label htmlFor="car">Car</label>
-                        </span>
-                        <span>
+                        </div>
+                        <div>
                             <input type="radio" name="mode" id="walk" value="WALKING"/>
                             <label htmlFor="walk">Walk</label>
-                        </span>
-                        <span>
+                        </div>
+                        <div>
                             <input type="radio" name="mode" id="bus" value="BUS"/>
                             <label htmlFor="bus">Bus</label>
-                        </span>
-                        <span>
+                        </div>
+                        <div>
                             <input type="radio" name="mode" id="subway" value="SUBWAY"/>
                             <label htmlFor="subway">Subway</label>
-                        </span>
+                        </div>
                     </div>
+
+                    <button className="Btn-rounded" >Submit</button>
                 </form>
 
             </section>

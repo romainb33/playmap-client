@@ -1,6 +1,6 @@
 .Home {
   height: 90vh;
-  margin: 30px;
+  margin: 0 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -19,3 +19,4 @@
   font-weight: 700;
   line-height: 55px;
 }
+

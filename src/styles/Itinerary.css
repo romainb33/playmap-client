@@ -1,26 +1,36 @@
 .Itinerary {
-  height: 90vh;
-  margin: 30px;
+  /* height: 90vh; */
+  margin: 0 30px;
 }
+
+.Itinerary section {
+  width: 100%
+}
+
 #form-itinerary{
   flex-direction: column;
+  align-items: flex-start;
+  margin-top: 60px;
 }
 
 #form-itinerary input[type="text"] {
-  height: 44px;
+  /* height: 44px; */
   background: transparent;
   outline: 0;
   border: 1px solid white;
   border-radius: 30px;
   padding: 10px;
+  margin-top: 10px;
   margin-bottom: 30px;
   width: 100%;
 }
-
-
-#travel-mode > span {
+#travel-mode {
+  width: 100%;
+}
+#travel-mode > div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 10px 15px;
 }
 

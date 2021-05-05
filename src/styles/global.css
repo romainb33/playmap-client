@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html {
@@ -20,10 +21,30 @@ ul {
 }
 
 .App {
-  font-family: 'Montserrat', sans-serif;
-  width: 100vw;
   height: 100vh;
+}
+
+.App::after,
+.App::before {
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.App::after {
   background: linear-gradient(17.93deg, #0D144E 0.68%, #206170 100.36%);
+  z-index: -2;   
+}
+
+.App::before {
+  background-image: url('../assets/map-bg.png'), linear-gradient(17.93deg, #0D144E 0.68%, #206170 100.36%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5;
+  z-index: -1;   
 }
 
 .flex {
@@ -36,6 +57,10 @@ ul {
 }
 .blue {
   color: #1A1F47;
+}
+
+.Logo {
+  margin-top: 20px;
 }
 
 .Logo p {
