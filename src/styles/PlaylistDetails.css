@@ -29,6 +29,18 @@
     font-weight: 400;
     font-size: 18px;
 }
+#cat-list {
+  flex-wrap: wrap;
+}
+#keyword-input {
+    border: 1px solid #1a1f47;
+    border-radius: 30px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
 /* ANIMATIONS */
 @keyframes slidein {
   from {
@@ -36,5 +48,14 @@
   }
   to {
     top: 70vh;
+  }
+}
+
+@keyframes slidein2 {
+  from {
+    top: 100vh;
+  }
+  to {
+    top: 10vh;
   }
 }

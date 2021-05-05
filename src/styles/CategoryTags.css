@@ -1,0 +1,41 @@
+.cat-tags {
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .cat-tags input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .tags {
+    top: 0;
+    left: 0;
+    height: 30px;
+    padding: 6px 15px;
+    border: 1px solid #1a1f47;
+    border-radius: 50px;
+    font-size: 14px;
+    background-color: #FFF;
+    color: #1a1f47
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .cat-tags input:checked ~ .tags {
+    background: #1a1f47;
+    color: #FFF;
+    border: none;
+  }

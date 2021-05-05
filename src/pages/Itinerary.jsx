@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/Itinerary.css'
-import '../styles/PlaylistDetails.css'
 
 import Logo from '../components/Logo'
 import PlaylistDetails from '../components/PlaylistDetails'
 
 export class Itinerary extends Component {
     state = {
-        isSubmit: false
+        isSubmit: false,
+        duration: null
     }
 
     handleSubmit = (event) => {
@@ -17,7 +17,7 @@ export class Itinerary extends Component {
     }
 
     render() {
-        const {isSubmit} = this.state
+        const {isSubmit, duration} = this.state
 
         return (
             <div className="flex Itinerary">
@@ -54,8 +54,7 @@ export class Itinerary extends Component {
                         { !isSubmit && <button id="submit-itinerary" className="Btn-rounded margin-top-std ">Submit</button> }
                     </form>
                     
-                    { isSubmit && <PlaylistDetails /> }
-                    
+                    { isSubmit && <PlaylistDetails duration={duration} /> }
 
                 </section>
             </div>
