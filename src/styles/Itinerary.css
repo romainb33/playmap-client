@@ -1,0 +1,26 @@
+.Itinerary {
+  height: 90vh;
+  margin: 30px;
+}
+#form-itinerary{
+  flex-direction: column;
+}
+
+#form-itinerary input[type="text"] {
+  height: 44px;
+  background: transparent;
+  outline: 0;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 10px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+
+#travel-mode > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

@@ -1,0 +1,21 @@
+.Home {
+  height: 90vh;
+  margin: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.Home h6 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 0px;
+  margin: 15px 0;
+}
+
+.Home h1 {
+  margin: 15px 0 45px;
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 55px;
+}

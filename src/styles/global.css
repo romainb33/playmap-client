@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Manrope", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.App {
+  font-family: 'Montserrat', sans-serif;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(17.93deg, #0D144E 0.68%, #206170 100.36%);
+}
+
+.flex {
+  display: flex
+}
+
+/* text */
+.white {
+  color: #fff;
+}
+.blue {
+  color: #1A1F47;
+}
+
+.Logo p {
+ font-weight: 700;
+}
