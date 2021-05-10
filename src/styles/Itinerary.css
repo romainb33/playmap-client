@@ -12,7 +12,10 @@
   align-items: flex-start;
   margin-top: 60px;
 }
-
+#form-itinerary > div:not(#travel-mode) {
+  width: 100%;
+  flex-direction: column;
+}
 #form-itinerary input[type="text"] {
   /* height: 44px; */
   border: 1px solid white;
@@ -20,7 +23,7 @@
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 30px;
-  width: 100%;
+
 }
 
 #travel-mode {
@@ -37,4 +40,32 @@
   background: #fff;
   color: #1A1F47;
 }
+.dropdown-results {
+  top: 90px;
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  border-radius: 20px;
+  background: #1A1F47;
+}
 
+.dropdown-results li {
+  cursor: pointer;
+  width: 100%;
+  font-size: 12px;
+  border-bottom: 1px solid#3f4364;
+  padding: 15px;
+}
+
+.dropdown-results li:hover {
+  background: #2e335c;
+}
+
+.dropdown-results li:first-of-type {
+  border-radius: 20px 20px 0 0;
+}
+
+.dropdown-results li:last-of-type {
+  border: 0;
+  border-radius: 0 0 20px 20px;
+}
