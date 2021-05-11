@@ -15,7 +15,9 @@ export class PlaylistDetails extends Component {
 
     render() {
         const {wantToSet} = this.state
-
+        const {duration} = this.props
+        const durationInMinutes = duration => Math.ceil(duration / 60)
+   
         return (
             <div id="PlaylistDetails">
                 <section id="estimated-time" className=" flex blue">
@@ -25,7 +27,7 @@ export class PlaylistDetails extends Component {
                             time
                         </h3>
                         <p>
-                            632<br/>
+                            {durationInMinutes(duration)}<br/>
                             <span>min</span>
                         </p>
                     </div>

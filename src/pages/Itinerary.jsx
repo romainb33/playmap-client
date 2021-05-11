@@ -15,20 +15,16 @@ export class Itinerary extends Component {
         departureSelected: false,
         duration: null,
         departure: {
-          // dropdown: false,
           address: "",
-          longitude: null,
-          latitude: null,
+          coordinates: [], //[longitude, latitude]
         },
         arrival: {
-          // dropdown: false,
           address: "",
-          longitude: null,
-          latitude: null,
+          coordinates: [] //[longitude, latitude]
         },
-        travelMode: "",
+        travelMode: "", // value = driving-traffic, walking, cycling
         results: [],   
-        search:"",
+        search:"", 
     }
 
     clearSearch = () => {
@@ -38,12 +34,14 @@ export class Itinerary extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
         this.setState({isSubmit: true})
+        console.log("handleSubmit")
+        this.handleDuration()
+        
     }
     
     handleChange = (event) => {
       const value = event.target.value;
       const key = event.target.name
-      console.log("key", key)
       if (key === "departure") {
           let departure = {...this.state.departure}
           departure.address = value
@@ -57,51 +55,72 @@ export class Itinerary extends Component {
       }
     }
 
-    changeAddress = (type, place) => {
+    selectAddress = (type, place) => {
       if (type === "departure") {
         let departure = {...this.state.departure}
         departure.address = place.place_name;
-        // departure.dropdown = false;
+        departure.coordinates = place.geometry.coordinates
         this.setState({departure, departureSelected: true});
       } 
       else if (type === "arrival") {
         let arrival = {...this.state.arrival}
         arrival.address = place.place_name;
-        // arrival.dropdown = false;
+        arrival.coordinates = place.geometry.coordinates
         this.setState({arrival, arrivalSelected: true});
       }
-      this.setState({search: 0, results: []});
+      this.setState({search: "", results: []});
     }
     
     
     handleAutoComplete = (input) => {
       const {search} = this.state
-      if (input.address.length > 5 ) {
-          this.setState({search: encodeURI(input.address)}, () => { 
-            axios
-            .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}&cachebuster=1620662989569&autocomplete=true&types=address%2Cplace%2Cpoi`)
-            .then(response => {
-                this.setState({results: response.data.features })
-            })
-            .catch(err => console.log(err))
+      if (input.address.length > 10 ) {
+        this.setState({search: encodeURI(input.address)}, () => {
+          axios
+          .get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}&cachebuster=1620662989569&autocomplete=true&types=address%2Cplace%2Cpoi&limit=7`)
+          .then(response => {
+            this.setState({results: response.data.features })
           })
+          .catch(err => console.log(err))
+        })
       }
     }
-  
+      
+    handleDuration = () => {
+      console.log("handleDuration")
+      const {departure, arrival, travelMode} = this.state  
+      if (travelMode === "car") {
+      } else {
+        console.log(`https://transit.router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=travelSummary&modes=-inclined,-aerial,-flight,-spaceship`
+        )
+        
+        axios.get(
+          `https://transit.router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=travelSummary&modes=-inclined,-aerial,-flight,-spaceship`
+        )
+        .then(res => {
+          console.log(res)
+          const sections = res.data.routes[0].sections;
+          let transitDuration = 0;
+          sections.forEach(section => transitDuration += section.travelSummary.duration)
+          return transitDuration
+        })
+        
+        .then(transitDuration => {
+          console.log(transitDuration)
+          this.setState({duration: transitDuration}, () => console.log(this.state.duration))
+        })
+        .catch(err => console.log(err))
+      }
+    }
+
     componentDidUpdate(prevProps, prevState) {
       let {departure, arrival, search} = this.state
       if (prevState.departure.address !== departure.address) {
         this.handleAutoComplete(departure)
-        // departure = {... departure}
-        // departure.dropdown = true;
-        // this.setState({departure})
         
       }
       if (prevState.arrival.address !== arrival.address) {
         this.handleAutoComplete(arrival)
-        // arrival = {... arrival}
-        // arrival.dropdown = true;
-        // this.setState({arrival})
       }
     }
 
@@ -135,7 +154,7 @@ export class Itinerary extends Component {
                   <ul className="dropdown-results">
                       {results.map((place) => (
                           <li
-                          onClick={() => this.changeAddress("departure", place)}
+                          onClick={() => this.selectAddress("departure", place)}
                           key={place.id}
                           >
                           {place.place_name}
@@ -161,7 +180,7 @@ export class Itinerary extends Component {
                   <ul className="dropdown-results" >
                       {results.map((place) => (
                           <li
-                          onClick={() => this.changeAddress("arrival", place)}
+                          onClick={() => this.selectAddress("arrival", place)}
                           key={place.id}
                           >
                           {place.place_name}
