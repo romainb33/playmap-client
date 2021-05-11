@@ -22,7 +22,7 @@ export class Itinerary extends Component {
           address: "",
           coordinates: [] //[longitude, latitude]
         },
-        travelMode: "", // value = driving-traffic, walking, cycling
+        travelMode: "", // value = car, bus, subway(fastest transit mode)
         results: [],   
         search:"", 
     }
@@ -34,7 +34,6 @@ export class Itinerary extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
         this.setState({isSubmit: true})
-        console.log("handleSubmit")
         this.handleDuration()
         
     }
@@ -85,36 +84,53 @@ export class Itinerary extends Component {
         })
       }
     }
-      
+    calculateCarDuration = () => {
+      const {departure, arrival} = this.state  
+      axios.get(
+        `https://router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&transportMode=car&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=summary`
+      )
+      .then(res => {
+        const sections = res.data.routes[0].sections;
+        let carDuration = 0;
+        sections.forEach(section => carDuration += section.summary.duration)
+        return carDuration
+      })
+      .then(carDuration => {
+        this.setState({duration: carDuration})
+      })
+      .catch(err => console.log(err))
+    }
+
+    calculateTransitDuration = (type) => {
+      const {departure, arrival} = this.state  
+      axios.get(
+        `https://transit.router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=travelSummary&modes=${type}`
+      )
+      .then(res => {
+        const sections = res.data.routes[0].sections;
+        let transitDuration = 0;
+        sections.forEach(section => transitDuration += section.travelSummary.duration)
+        return transitDuration
+      })
+      .then(transitDuration => {
+        this.setState({duration: transitDuration})
+      })
+      .catch(err => console.log(err))
+    }
+
     handleDuration = () => {
-      console.log("handleDuration")
-      const {departure, arrival, travelMode} = this.state  
+      const {travelMode} = this.state  
       if (travelMode === "car") {
+        this.calculateCarDuration()
+      } else if (travelMode === "bus") { 
+        this.calculateTransitDuration('bus,busRapid')
       } else {
-        console.log(`https://transit.router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=travelSummary&modes=-inclined,-aerial,-flight,-spaceship`
-        )
-        
-        axios.get(
-          `https://transit.router.hereapi.com/v8/routes?apiKey=${process.env.REACT_APP_HERE_TOKEN}&origin=${departure.coordinates[1]},${departure.coordinates[0]}&destination=${arrival.coordinates[1]},${arrival.coordinates[0]}&return=travelSummary&modes=-inclined,-aerial,-flight,-spaceship`
-        )
-        .then(res => {
-          console.log(res)
-          const sections = res.data.routes[0].sections;
-          let transitDuration = 0;
-          sections.forEach(section => transitDuration += section.travelSummary.duration)
-          return transitDuration
-        })
-        
-        .then(transitDuration => {
-          console.log(transitDuration)
-          this.setState({duration: transitDuration}, () => console.log(this.state.duration))
-        })
-        .catch(err => console.log(err))
+        this.calculateTransitDuration('-inclined,-aerial,-flight,-spaceship,-highSpeedTrain')
       }
     }
 
     componentDidUpdate(prevProps, prevState) {
-      let {departure, arrival, search} = this.state
+      let {departure, arrival} = this.state
       if (prevState.departure.address !== departure.address) {
         this.handleAutoComplete(departure)
         
@@ -150,21 +166,25 @@ export class Itinerary extends Component {
                     value={departure.address}
                     required
                   />
-                  {departure.address && results.length > 0 && !departureSelected &&
-                  <ul className="dropdown-results">
-                      {results.map((place) => (
+                  {departure.address &&
+                    results.length > 0 &&
+                    !departureSelected && (
+                      <ul className="dropdown-results">
+                        {results.map((place) => (
                           <li
-                          onClick={() => this.selectAddress("departure", place)}
-                          key={place.id}
+                            onClick={() =>
+                              this.selectAddress("departure", place)
+                            }
+                            key={place.id}
                           >
-                          {place.place_name}
+                            {place.place_name}
                           </li>
-                      ))}
-                  </ul>
-                  }
+                        ))}
+                      </ul>
+                    )}
                 </div>
-                
-                <div className="relative flex">  
+
+                <div className="relative flex">
                   <label htmlFor="arrival">Arrival</label>
                   <input
                     type="text"
@@ -176,48 +196,52 @@ export class Itinerary extends Component {
                     value={arrival.address}
                     required
                   />
-                  {arrival.address && results.length > 0 && !arrivalSelected && 
-                  <ul className="dropdown-results" >
+                  {arrival.address && results.length > 0 && !arrivalSelected && (
+                    <ul className="dropdown-results">
                       {results.map((place) => (
-                          <li
+                        <li
                           onClick={() => this.selectAddress("arrival", place)}
                           key={place.id}
-                          >
+                        >
                           {place.place_name}
-                          </li>
+                        </li>
                       ))}
-                  </ul>
-                  }
+                    </ul>
+                  )}
                 </div>
 
                 <label htmlFor="mode">Travel Mode</label>
                 <div id="travel-mode" className="flex">
                   <div>
                     <input
+                      onClick={this.handleChange}
                       type="radio"
-                      name="mode"
+                      name="travelMode"
                       id="car"
-                      value="DRIVING"
+                      value="car"
                       required
                     />
                     <label htmlFor="car">Car</label>
                   </div>
                   <div>
-                    <input type="radio" name="mode" id="walk" value="WALKING" />
-                    <label htmlFor="walk">Walk</label>
-                  </div>
-                  <div>
-                    <input type="radio" name="mode" id="bus" value="BUS" />
-                    <label htmlFor="bus">Bus</label>
+                    <input
+                      onClick={this.handleChange}
+                      type="radio"
+                      name="travelMode"
+                      id="bus"
+                      value="bus"
+                    />
+                    <label htmlFor="bus">Bus Only</label>
                   </div>
                   <div>
                     <input
+                      onClick={this.handleChange}
                       type="radio"
-                      name="mode"
+                      name="travelMode"
                       id="subway"
-                      value="SUBWAY"
+                      value="subway"
                     />
-                    <label htmlFor="subway">Subway</label>
+                    <label htmlFor="subway">Subway/Bus</label>
                   </div>
                 </div>
 

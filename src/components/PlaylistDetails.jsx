@@ -12,15 +12,17 @@ export class PlaylistDetails extends Component {
     handleSetup = () => {
         this.setState({wantToSet: true})
     }
-
     render() {
         const {wantToSet} = this.state
         const {duration} = this.props
+
         const durationInMinutes = duration => Math.ceil(duration / 60)
-   
+        
+        const animStyle = {animation: `slidein2 0.6s ease-in-out forwards`}
+        
         return (
             <div id="PlaylistDetails">
-                <section id="estimated-time" className=" flex blue">
+                <section id="estimated-time" className="flex blue">
                     <div className="flex">
                         <h3>
                             Estimated <br/>
